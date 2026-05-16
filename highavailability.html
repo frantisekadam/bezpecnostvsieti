@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezpečnosť v sieťach – študentská wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="v-header">
+    <div class="v-header-inner">
+      <div class="v-logo">
+<a href="index.html" class="wiki-logo">
+  <img src="zamok.png" alt="Bezpečnosť v sieti" class="wiki-logo-icon">
+  <span class="wiki-logo-text">
+    <span class="wiki-logo-main">Bezpečnosť</span>
+    <span class="wiki-logo-sub">v sieti</span>
+  </span>
+</a>
+      </div>
+
+      <nav class="hor-nav">
+        <a href="vpn.html" style="margin-right: 20px;">VPN<img src="vpnicon.png" style="width: 30px; height: 30px;  margin-left:1px;" alt="vpn">  </a>
+        <a href="opatrenia.html" style="margin-right: 20px;"> ÚTOKY <img src="opatreniabackg.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="sifrovanespojenie.html" style="margin-right: 20px;">ŠIFROVANÉSPOJENIE<img src="https.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="bezpecnostvowifi.html">WiFi <img src="wi-fi.png" style="width: 30px; height: 30px;  margin-left: 1px;" alt="vpn"> </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="v-layout">
+    <aside class="v-sidebar">
+      <div class="v-sidebar-box">
+        <div class="v-sidebar-title">Obsah</div>
+        <ul>
+          <li><a href="#co-je-ha">Čo je to High availability</a></li>
+          <li><a href="#tabulka">Tabuľka dostupnosti</a></li>
+          <li><a href="#ako-dosiahnut">Ako dosiahnuť vysokú dostupnosť</a></li>
+          <li><a href="#vyhody-nevyhody">Výhody a nevýhody</a></li>
+          <li><a href="#kde-riesit">Kde riešiť vysokú dostupnosť</a></li>
+          <li><a href="#priklad">Príklad</a></li>
+          <li><a href="#softver">Softvérová architektúra</a></li>
+          <li><a href="#hardware">Hardvérová a sieťová architektúra</a></li>
+          <li><a href="#skalovanie">Škálovanie</a></li>
+          <li><a href="#loadbalancing">Load balancing</a></li>
+          <li><a href="#Zdroje">Zdroje</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="v-content">
+
+      <h1 id="co-je-ha">High availability</h1>
+
+      <h2>Čo je to High availability?</h2>
+      <ul>
+        <li>High availability je názov pre súbor technológií, ktoré umožňujú poskytovať služby s vysokou dostupnosťou pre zákazníkov.</li>
+        <li>Znamená to, že poskytovateľ služby garantuje mieru dostupnosti služby na úrovni aspoň 99,9 %.</li>
+        <li>Miera dostupnosti sa definuje v zmluve v časti <strong>Service Level Agreement (SLA)</strong>.</li>
+        <li>Pri dostupnosti 99,9 % je možný výpadok služby približne 44 minút za mesiac, teda asi 1,5 minúty za deň.</li>
+      </ul>
+
+      <h2 id="tabulka">Tabuľka dostupnosti</h2>
+      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th>Percentuálne vyjadrenie</th>
+          <th>Nedostupnosť počas mesiaca</th>
+          <th>Nedostupnosť počas dňa</th>
+          <th>Popis</th>
+        </tr>
+        <tr>
+          <td>90 %</td>
+          <td>73 hod 3 min (3 dni)</td>
+          <td>2 hod 24 min</td>
+          <td>Garantuje bežný ISP</td>
+        </tr>
+        <tr>
+          <td>99 %</td>
+          <td>7 hod 19 min</td>
+          <td>14 min</td>
+          <td>Klasický webhosting</td>
+        </tr>
+        <tr>
+          <td>99,9 %</td>
+          <td>44 min</td>
+          <td>1,5 min</td>
+          <td>Základná hodnota HA</td>
+        </tr>
+        <tr>
+          <td>99,99 %</td>
+          <td>4,4 min</td>
+          <td>9 sek</td>
+          <td>Rozumná hodnota HA</td>
+        </tr>
+        <tr>
+          <td>99,999 %</td>
+          <td>26 sek</td>
+          <td>&lt; 1 sek</td>
+          <td>Kritické systémy</td>
+        </tr>
+      </table>
+
+      <br>
+
+      <h2 id="ako-dosiahnut">Ako dosiahnuť vysokú dostupnosť?</h2>
+      <ul>
+        <li>Základom je <strong>redundancia</strong>, teda mať komponenty navyše, aby v prípade výpadku mohol ich úlohu prevziať náhradný komponent.</li>
+        <li>Cieľom je zbaviť sa tzv. <strong>SPOF</strong> (Single Point Of Failure), teda miest v infraštruktúre, ktorých zlyhanie by prerušilo dodávku služby.</li>
+        <li>SPOF môže byť napríklad disk, server, sieťové pripojenie, elektrické napájanie alebo samotná aplikácia.</li>
+        <li>Zároveň treba zabezpečiť <strong>replikáciu dát</strong>, aby sa na redundantných miestach nachádzali rovnaké údaje.</li>
+      </ul>
+
+      <h2 id="vyhody-nevyhody">Výhody a nevýhody vysokej dostupnosti</h2>
+      <h4 style="color: green;">Výhody</h4>
+      <ul style="color: green;">
+        <li>Spokojnosť zákazníkov</li>
+        <li>Zníženie času potrebného na údržbu</li>
+        <li>Minimalizácia dopadov pri problémoch</li>
+        <li>Schopnosť služby rásť – škálovanie</li>
+      </ul>
+
+      <h4 style="color: darkorange;">Nevýhody</h4>
+      <ul style="color: darkorange;">
+        <li>Zložitosť a komplexnosť riešenia</li>
+        <li>Vyššie obstarávacie náklady</li>
+        <li>Vyššie prevádzkové náklady, pretože redundancia beží neustále</li>
+        <li>Jalový výkon – časť výkonu sa využije až pri výpadku</li>
+        <li>Nutnosť mať na sklade náhradné súčiastky</li>
+      </ul>
+
+      <h2 id="kde-riesit">Kde je možné alebo potrebné riešiť vysokú dostupnosť?</h2>
+      <ul>
+        <li><strong>Aplikácia</strong> – connection pools, fronty</li>
+        <li><strong>Softvérová architektúra</strong> – replikácia dát, balancery</li>
+        <li><strong>Hardvérová architektúra</strong> – RAID, NIC teaming, zdieľané úložisko</li>
+        <li><strong>Sieťová architektúra</strong> – VRRP, multihoming</li>
+      </ul>
+
+      <h2 id="priklad">Príklad</h2>
+      <ul>
+        <li>Ak chceme dosiahnuť vysokú dostupnosť e-shopu, musíme zabezpečiť všetky dôležité časti jeho prevádzky.</li>
+        <li>Aplikácia pre svoj beh potrebuje webový server, databázový server, operačný systém, úložisko dát a pripojenie do internetu.</li>
+      </ul>
+
+      <h2 id="softver">HA na úrovni softvérovej architektúry</h2>
+      <ul>
+        <li>Na začiatku býva všetko na jednom serveri – webserver, databáza aj storage.</li>
+        <li>Ďalším krokom je rozdelenie systému na viaceré časti, ktoré môžeme neskôr znásobovať, napríklad aj pomocou virtuálnych serverov.</li>
+        <li>Následne sa zavedie replikácia dát medzi hlavný a záložný storage a databázu.</li>
+        <li>Potom sa pridajú redundantné webové servery a ich prevádzku riadi load balancer.</li>
+        <li>Na odstránenie ďalšieho SPOF sa môžu použiť dva load balancery fungujúce cez DNS alebo Virtual IP.</li>
+        <li>Pri výpadku databázy alebo storage sa dá prepínanie zautomatizovať pomocou interného load balancera.</li>
+      </ul>
+      <img src="ha.png" class="private" alt="ha">
+      <h2 id="hardware">HA na úrovni hardvéru a siete</h2>
+      <ul>
+        <li>Na začiatku máme jeden server pripojený do internetu.</li>
+        <li>Ďalej pridáme viac serverov cez switch a vytvoríme serverový klaster, aby pri výpadku jedného servera prevzal úlohu iný.</li>
+        <li>Potom odstránime SPOF switcha pridaním druhého switcha a prepojením serverov s oboma switchmi.</li>
+        <li>Následne sa pridáva redundantný router, aby zlyhanie jedného routra neodstavilo sieť.</li>
+        <li>Posledným krokom môže byť viacnásobné pripojenie do internetu cez rovnakého alebo iného ISP.</li>
+        <li>Najvyššou úrovňou je georeplikácia, teda replikácia celého riešenia do inej geografickej lokality.</li>
+      </ul>
+      <img src="ha2.png" class="private" alt="ha2">
+      <h2 id="skalovanie">High availability a škálovanie</h2>
+      <ul>
+        <li>Vysoká dostupnosť znamená aj to, že používatelia majú dáta k dispozícii vtedy, keď ich potrebujú, a čo najrýchlejšie.</li>
+        <li>Veľké množstvo používateľov môže službu preťažiť a spôsobiť pomalú odozvu alebo timeout.</li>
+        <li><strong>Vertikálne škálovanie (scale-up)</strong> znamená pridanie výkonu jednému serveru, napríklad CPU, RAM, úložiska alebo sieťových kariet.</li>
+        <li><strong>Horizontálne škálovanie (scale-out)</strong> znamená pridanie ďalších serverov a ich spoločné používanie v klastri.</li>
+      </ul>
+      <img src="haskalovanie.png" class="private"  alt="haskalovanie">
+      <h2 id="loadbalancing">High availability a load balancing</h2>
+      <ul>
+        <li>Pri horizontálnom škálovaní treba zabezpečiť rovnomerné rozdelenie záťaže medzi jednotlivé uzly klastra.</li>
+        <li>Na to slúži <strong>load balancer</strong>.</li>
+        <li><strong>Round robin</strong> – každé nové pripojenie sa presmeruje na ďalší server dookola.</li>
+        <li><strong>Weighted round robin</strong> – servery majú nastavené váhy, podľa ktorých sa rozdeľujú požiadavky.</li>
+        <li><strong>Least connection</strong> – požiadavka sa pošle na server s najmenším počtom otvorených spojení.</li>
+        <li><strong>Response time</strong> – požiadavka sa pošle na server, ktorý reaguje najrýchlejšie.</li>
+      </ul>
+
+      <br>
+      <br>
+      <hr>
+      <hr>
+
+      <div class="Zdroje">
+        <h1 id="Zdroje">Zdroje:</h1>
+
+        <p>
+          <a href="https://mylearning.spseke.sk/course/view.php?id=145" target="_blank" rel="noopener noreferrer">
+            <strong>počítačová bezpečnosť - 3. ročník</strong>
+          </a>
+        </p>
+        <br>
+        <br>
+        <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Ikonky</a>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <hr>
+      <strong><center>&copy; 2026 František Adam</center></strong>
+    </main>
+  </div>
+</body>
+</html>

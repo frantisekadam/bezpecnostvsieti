@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezpečnosť v sieťach – študentská wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="v-header">
+    <div class="v-header-inner">
+<div class="v-logo">
+<a href="index.html" class="wiki-logo">
+  <img src="zamok.png" alt="Bezpečnosť v sieti" class="wiki-logo-icon">
+  <span class="wiki-logo-text">
+    <span class="wiki-logo-main">Bezpečnosť</span>
+    <span class="wiki-logo-sub">v sieti</span>
+  </span>
+</a>
+</div>
+      <nav class="hor-nav">
+        <a href="vpn.html" style="margin-right: 20px;">VPN<img src="vpnicon.png" style="width: 30px; height: 30px;  margin-left:1px;" alt="vpn">  </a>
+        <a href="opatrenia.html" style="margin-right: 20px;"> ÚTOKY <img src="opatreniabackg.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="sifrovanespojenie.html" style="margin-right: 20px;">ŠIFROVANÉSPOJENIE<img src="https.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="highavailability.html" style="margin-right: 20px;"> HIGH-AVAILABILITY <img src="database.png" style="width: 30px; height: 30px;  margin-left: 2px;" alt="vpn"> </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="v-layout">
+    <aside class="v-sidebar">
+      <div class="v-sidebar-box">
+        <div class="v-sidebar-title">Obsah</div>
+        <ul>
+          <li><a href="#zalohovanie">Čo je to WiFi</a></li>
+          <li><a href="#rezimy">Režimy spojenia vo WiFi</a></li>
+          <li><a href="#zaciatok">Ako sa začína WiFi komunikácia</a></li>
+          <li><a href="#overenie">Metódy overenia</a></li>
+          <li><a href="#wep">WEP</a></li>
+          <li><a href="#wpa">WPA</a></li>
+          <li><a href="#wpa2">WPA2</a></li>
+          <li><a href="#wpa3">WPA3</a></li>
+          <li><a href="#domaca-wifi">Zabezpečenie domácej WiFi</a></li>
+          <li><a href="#enterprise">Podnikové overovanie</a></li>
+          <li><a href="#utoky">Možné útoky vo WiFi sieti</a></li>
+          <li><a href="#Zdroje">Zdroje</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="v-content">
+
+      <h1 id="zalohovanie">Bezpečnosť vo WiFi</h1>
+      <strong>
+      <h2>Čo je to WiFi?</h2>
+      <ul>
+        <li>WiFi je počítačová sieť, ktorá používa na prenos dát elektromagnetické rádiové vlny, najčastejšie vo frekvenčnom pásme 2,4 GHz alebo 5 GHz.</li>
+        <li>Z hľadiska bezpečnosti je WiFi veľmi podobná bežnému rádiu.</li>
+        <li>Každý môže zachytiť to, čo stanica vysiela.</li>
+        <li>Signál sa dá rušiť.</li>
+        <li>Signál sa dá aj sfalšovať alebo prehlušiť iným zmysluplným signálom.</li>
+      </ul> 
+      </strong>
+      <h2 id="rezimy">Režimy spojenia vo WiFi</h2>
+      <ul>
+        <li><strong>Infraštruktúrny režim</strong> – v sieti sa nachádza jeden centrálny bod, teda access point alebo WiFi router, ktorý riadi komunikáciu a overuje prístup do siete.</li>
+        <li>Zariadenia v infraštruktúrnom režime nekomunikujú priamo medzi sebou, ale cez centrálny bod.</li>
+        <li><strong>Ad-hoc režim</strong> – zariadenia medzi sebou komunikujú priamo v režime peer-to-peer.</li>
+      </ul>
+      <img src="wifi.png" class="private" alt="wifi">
+      <h2 id="zaciatok">Ako sa začína WiFi komunikácia?</h2>
+
+      <h4>Probe request a probe response</h4>
+      <ul>
+        <li><strong>Probe request</strong> – klient, teda WiFi station, vysiela do okolia na všetkých kanáloch informáciu o svojich podporovaných parametroch spojenia a zisťuje, aké access pointy sú dostupné.</li>
+        <li><strong>Probe response</strong> – access point odpovedá klientovi a oznamuje mu svoje podporované rýchlosti, zabezpečenia, SSID, MAC adresu (BSSID) a ďalšie parametre.</li>
+      </ul>
+
+      <h4>Authentication request a authentication response</h4>
+      <ul>
+        <li><strong>Authentication request</strong> – klient si vyberie access point, s ktorým chce komunikovať, a pošle mu žiadosť o nadviazanie spojenia.</li>
+        <li><strong>Authentication response</strong> – access point potvrdí, že chce s klientom komunikovať, alebo spojenie zamietne, napríklad ak je klientova MAC adresa v zozname nedôveryhodných.</li>
+        <li>Pri zamietnutí môže access point odoslať správu <strong>Deauthentication response</strong>.</li>
+      </ul>
+
+      <h4>Association request a association response</h4>
+      <ul>
+        <li><strong>Association request</strong> – klient odošle žiadosť, v ktorej uvádza metódu šifrovania a overovací kľúč.</li>
+        <li><strong>Association response</strong> – ak klient splnil podmienky na pripojenie, access point ho pridá do zoznamu klientov, s ktorými môže komunikovať.</li>
+      </ul>
+
+      <img src="rezimwifi.png" class="schema1" alt="rezimwifi">
+      <h2 id="overenie">Metódy overenia</h2>
+      <ul>
+        <li>Bez overenia a bez šifrovania – <strong>Opened network</strong>.</li>
+        <li>So spoločným kľúčom – <strong>pre-shared key (PSK)</strong>.</li>
+        <li><strong>WEP</strong></li>
+        <li><strong>WPA</strong></li>
+        <li><strong>WPA2</strong></li>
+        <li><strong>WPA3</strong></li>
+        <li>Podnikové overenie cez centrálny <strong>RADIUS server</strong>.</li>
+        <li>Overenie menom a heslom.</li>
+        <li>Overenie MAC adresou.</li>
+        <li>Overenie certifikátom.</li>
+      </ul>
+
+      <h2 id="wep">WEP – Wired Equivalent Privacy</h2>
+      <ul>
+        <li>WEP bol prvý bezpečnostný algoritmus pre WiFi a objavil sa v roku 1997.</li>
+        <li>Jeho cieľom bolo zabezpečiť aspoň podobnú úroveň ochrany dát ako v klasickej drôtovej sieti.</li>
+        <li>Používal kľúč pevnej dĺžky 40 bitov alebo 104 bitov.</li>
+        <li>Šifrovanie prebiehalo pomocou prúdovej šifry <strong>RC4</strong>.</li>
+        <li>Kontrola integrity dát sa robila pomocou <strong>CRC-32</strong> a hodnoty <strong>ICV</strong>.</li>
+        <li>Slabinou WEP bol krátky 24-bitový inicializačný vektor <strong>IV</strong>, ktorý sa opakoval približne každých 5000 až 10000 paketov.</li>
+        <li>Spätnou analýzou zachytených paketov bolo možné zrekonštruovať šifrovací kľúč a získať heslo do siete.</li>
+        <li>Na prelomenie WEP sa dá použiť napríklad nástroj <strong>Aircrack-ng</strong>.</li>
+      </ul>
+      <img src="WEP.png"class="private" alt="wep">
+      <h2 id="wpa">WPA – WiFi Protected Access</h2>
+      <ul>
+        <li>WPA vzniklo po odhalení slabín WEP ako novšia a bezpečnejšia metóda ochrany WiFi siete.</li>
+        <li>Na starších zariadeniach ho bolo možné zaviesť aj zmenou firmvéru v routri alebo access pointe.</li>
+        <li>Aj WPA používalo RC4, ale s dôležitým vylepšením nazývaným <strong>TKIP</strong> (Temporal Key Integrity Protocol).</li>
+        <li>Na overovanie integrity sa využíval mechanizmus <strong>Message Integrity Check</strong>.</li>
+      </ul>
+
+      <h4>WPA – TKIP</h4>
+      <ul>
+        <li>Pri WEP sa šifrovací kľúč tvoril jednoduchým spojením IV a hesla, čo bolo slabé.</li>
+        <li>TKIP zaviedol dočasné kľúče platné len pre jeden prenesený paket.</li>
+        <li>Tieto kľúče sa skladajú z hlavného kľúča, MAC adresy príjemcu a poradového čísla rámca.</li>
+        <li>Ako hlavný kľúč sa nepoužíva priamo heslo do siete, ale hash vytvorený z hesla a náhodného čísla.</li>
+      </ul>
+
+      <h4>WPA – MICHAEL</h4>
+      <ul>
+        <li>MICHAEL je systém na kontrolu neporušenosti paketov prenášaných cez sieť WPA.</li>
+        <li>WPA stále používa CRC-32, ale pridáva k nemu aj zašifrovaný <strong>MIC</strong> (Message Integrity Check).</li>
+        <li>MIC funguje podobne ako elektronický podpis rámca.</li>
+        <li>Ak sa útočník pokúsi pozmeniť paket viac ako raz počas 60 sekúnd, šifrovací systém sa zresetuje a vygeneruje sa nový základ kľúča.</li>
+        <li>Aj napriek tomu sa WPA dá prelomiť do niekoľkých hodín, pri slovníkovom hesle aj oveľa rýchlejšie.</li>
+      </ul>
+
+      <h2 id="wpa2">WPA2</h2>
+      <ul>
+        <li>WPA2 sa stalo povinným štandardom v zariadeniach vyrábaných od roku 2006.</li>
+        <li>Prestalo používať prúdovú šifru RC4 a začalo využívať blokovú šifru <strong>AES</strong>.</li>
+        <li>Na zvýšenie bezpečnosti integrity správ sa použil algoritmus <strong>CCMP</strong>.</li>
+        <li>Dohadovanie šifrovacieho kľúča pre AES prebieha pomocou <strong>4-way handshake</strong>.</li>
+      </ul>
+
+      <h4>WPA2 – 4-way handshake</h4>
+      <ul>
+        <li>Pred prenosom dát si access point a klient musia dohodnúť viacero kľúčov, napríklad PTK pre unicast a GTK pre multicast a broadcast prenosy.</li>
+        <li>Na vytvorenie kľúčov potrebujú PSK, náhodné číslo AP (ANonce), náhodné číslo klienta (SNonce), MAC adresu AP a MAC adresu klienta.</li>
+        <li>Access point najprv pošle klientovi ANonce.</li>
+        <li>Klient následne pošle access pointu SNonce spolu s MIC.</li>
+        <li>Potom access point vytvorí GTK, zašifruje ho pomocou PTK a odošle ho klientovi.</li>
+        <li>Klient správu overí, uloží si GTK a potvrdí úspešné dohodnutie kľúča.</li>
+        <li>V súčasnosti sa odporúča používať aspoň WPA2 s kontrolou CCMP.</li>
+      </ul>
+      <img src="WPA2.png" class="wpa2" alt="WPA2">
+      
+      <h2 id="wpa3">WPA3</h2>
+      <ul>
+        <li>WPA3 je najnovší štandard platný od roku 2018.</li>
+        <li>Na šifrovanie používa tiež AES, ale dĺžka kľúča sa zvýšila zo 128 bitov na 192 bitov.</li>
+        <li>Na overovanie integrity sa už nepoužíva CCMP, ale novší algoritmus <strong>GCMP</strong>.</li>
+        <li>Namiesto 4-way handshake používa algoritmus <strong>SAE</strong>, ktorý je odolný proti offline útokom.</li>
+      </ul>
+
+      <h4>Ďalšie vlastnosti WPA3</h4>
+      <ul>
+        <li><strong>Forward secrecy</strong> – zachytenú komunikáciu nie je možné spätne dešifrovať, pretože kľúče sa generujú pre každé spojenie zvlášť.</li>
+        <li><strong>Opportunistic Wireless Encryption (OWE)</strong> – aj otvorená sieť môže mať šifrovanú komunikáciu medzi AP a klientom bez spoločného vstupného hesla.</li>
+        <li><strong>Device Provisioning Protocol (DPP)</strong> – zariadenia je možné pripojiť do siete napríklad naskenovaním QR kódu alebo pomocou NFC.</li>
+      </ul>
+
+      <h2 id="domaca-wifi">Možnosti zabezpečenia domácej WiFi</h2>
+      <ul>
+        <li>Zmeniť predvolené heslo do administračnej sekcie routra, prípadne aj login.</li>
+        <li>Používať najvyššiu podporovanú overovaciu metódu, ideálne WPA2 alebo WPA3, s dostatočne dlhým kľúčom.</li>
+        <li>Vypnúť vysielanie SSID.</li>
+        <li>Vytvoriť zoznam dôveryhodných zariadení pomocou MAC filtering.</li>
+      </ul>
+
+      <h2 id="enterprise">Overovanie v podnikovej sfére</h2>
+      <ul>
+        <li>V podnikoch je potrebná vyššia úroveň zabezpečenia, pretože treba evidovať, kto, kedy a s akým zariadením sa pokúšal pripojiť do siete.</li>
+        <li>Tento spôsob overovania je popísaný v štandarde <strong>802.1x</strong>.</li>
+        <li>Využíva sa nielen vo WLAN, ale aj v klasickej drôtovej LAN sieti.</li>
+        <li>Princíp spočíva v zavedení centrálneho bodu v sieti, ktorý obsahuje údaje o používateľoch, overuje ich a oznamuje access pointu alebo switchu, či sa klient môže pripojiť.</li>
+      </ul>
+
+      <h4>Tri typy zariadení v 802.1x</h4>
+      <ul>
+        <li><strong>Žiadateľ (supplicant)</strong> – počítač alebo zariadenie, ktoré sa chce pripojiť do siete.</li>
+        <li><strong>Autentizátor (authenticator)</strong> – switch alebo access point, na ktorý sa klient pripája.</li>
+        <li><strong>Autentizačný server (authentication server)</strong> – server, ktorý komunikuje s autentizátorom pomocou RADIUS alebo TACACS a overuje totožnosť používateľa.</li>
+      </ul>
+      <img src="overenie.png"class="wpa2" alt="overenie">
+      <h4>Priebeh komunikácie cez EAP</h4>
+      <ul>
+        <li>Žiadateľ sa chce pripojiť do siete a access point mu pošle výzvu na identifikáciu.</li>
+        <li>Access point povolí len komunikáciu medzi klientom a serverom.</li>
+        <li>Žiadateľ odošle identifikačné údaje cez access point na server.</li>
+        <li>Server zistí, či sa používateľ nachádza v databáze, a následne vyžiada overenie identity.</li>
+        <li>Žiadateľ odošle heslo alebo certifikát.</li>
+        <li>Autentizačný server overí identitu a v prípade úspechu povolí klientovi vstup do siete.</li>
+      </ul>
+
+      <h4>Možné spôsoby overenia</h4>
+      <ul>
+        <li><strong>EAP-MD5</strong> – používa meno a heslo, ale dnes sa už neodporúča pre nízku bezpečnosť.</li>
+        <li><strong>EAP-TLS</strong> – klient aj server sa overujú certifikátom; je veľmi bezpečný, ale aj náročný na správu.</li>
+        <li><strong>EAP-TTLS</strong> – server sa overuje certifikátom, klientovi stačí heslo.</li>
+        <li><strong>EAP-PEAP</strong> – funguje podobne ako TTLS a ide o implementáciu Microsoftu.</li>
+        <li>Z bezpečnostného hľadiska sa najčastejšie využívajú EAP-TTLS a EAP-PEAP.</li>
+      </ul>
+
+      <h2 id="utoky">Možné útoky vo WiFi sieti</h2>
+
+      <h4>Neoprávnený vstup do siete</h4>
+      <ul>
+        <li><strong>Password cracking</strong> – útočník sa snaží prelomiť heslo a získať prístup do siete.</li>
+        <li><strong>Identity theft</strong> – útočník si nastaví MAC adresu povoleného zariadenia a vydáva sa za neho.</li>
+      </ul>
+
+      <h4>Denial of Service</h4>
+      <ul>
+        <li><strong>Rušenie</strong> – útočník vysiela na rovnakej frekvencii ako access point a tým znemožní používateľom pripojenie.</li>
+        <li><strong>Deautentifikačný útok</strong> – útočník pošle access pointu rámec so zdrojovou adresou obete a AP klienta odpojí.</li>
+        <li><strong>CTS flood</strong> – útočník zneužije správu CTS a zabráni ostatným klientom vo vysielaní dát.</li>
+      </ul>
+
+      <h4>Man In The Middle</h4>
+      <ul>
+        <li><strong>ARP spoofing</strong> – útočník zmení ARP záznam obete tak, že k IP adrese routra priradí svoju MAC adresu a zachytáva prenášané dáta.</li>
+        <li><strong>DHCP spoofing</strong> – útočník vyradí legitímny DHCP server a začne sám prideľovať klientom adresy, pričom sa nastaví ako default gateway.</li>
+        <li><strong>Rogue AP</strong> – útočník vytvorí otvorenú sieť s rovnakým SSID ako legitímny access point a pomocou silnejšieho signálu alebo deautentifikačného útoku prinúti obeť pripojiť sa k nemu.</li>
+      </ul>
+
+      <br>
+      <br>
+      <hr>
+      <hr>
+
+      <div class="Zdroje">
+        <h1 id="Zdroje">Zdroje:</h1>
+
+        <p>
+          <a href="https://mylearning.spseke.sk/course/view.php?id=145" target="_blank" rel="noopener noreferrer">
+            <strong>počítačová bezpečnosť - 3. ročník</strong>
+          </a>
+        </p>
+        <br>
+        <br>
+        <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Ikonky</a>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <hr>
+      <strong><center>&copy; 2026 František Adam</center></strong>
+    </main>
+  </div>
+</body>
+</html>

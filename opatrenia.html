@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezpečnosť v sieťach – študentská wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="v-header">
+    <div class="v-header-inner">
+      <div class="v-logo">
+<a href="index.html" class="wiki-logo">
+  <img src="zamok.png" alt="Bezpečnosť v sieti" class="wiki-logo-icon">
+  <span class="wiki-logo-text">
+    <span class="wiki-logo-main">Bezpečnosť</span>
+    <span class="wiki-logo-sub">v sieti</span>
+  </span>
+</a>
+      </div>
+
+      <nav class="hor-nav">
+        <a href="vpn.html" style="margin-right: 20px;">VPN<img src="vpnicon.png" style="width: 30px; height: 30px;  margin-left:1px;" alt="vpn">  </a>
+        <a href="sifrovanespojenie.html" style="margin-right: 20px;">ŠIFROVANÉSPOJENIE<img src="https.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="highavailability.html" style="margin-right: 20px;"> HIGH-AVAILABILITY <img src="database.png" style="width: 30px; height: 30px;  margin-left: 2px;" alt="vpn"> </a>
+        <a href="bezpecnostvowifi.html">WiFi <img src="wi-fi.png" style="width: 30px; height: 30px;  margin-left: 1px;" alt="vpn"> </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="v-layout">
+    <aside class="v-sidebar">
+      <div class="v-sidebar-box">
+        <div class="v-sidebar-title">Obsah</div>
+        <ul>
+          <li><a href="#sifspojenie">Šifrované spojenie medzi klientom a serverom</a></li>
+          <li><a href="#vpn">Virtuálne privátne siete (VPN)</a></li>
+          <li><a href="#opatrenia">Ochranné opatrenia pred útokmi na počítačové siete</a></li>
+          <li><a href="#zalohovanie">Bezpečnosť vo WiFi</a></li>
+          <li><a href="#typy-zaloh">High availability</a></li>
+          <li><a href="#tabulka">Tabuľka: zálohy vs. RAID</a></li>
+          <li><a href="#raid">RAID diskové polia</a></li>
+          <li><a href="#ups">Záložné napájanie (UPS)</a></li>
+          <li><a href="#fyzicka">Fyzická ochrana dát</a></li>
+          <li><a href="#Zdroje">Zdroje</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="v-content">
+
+      <h1 id="opatrenia">Ochranné opatrenia pred útokmi na počítačové siete</h1>
+
+      <h2>Typy útokov</h2>
+      <ul>
+        <li><strong>Denial of Service (DoS)</strong> – tento typ útokov spočíva v zamedzení využívania bežných sieťových služieb (DHCP, DNS, HTTP...) alebo iných IT služieb (autentifikácia, databázy, ...) ich odstavením alebo extrémnym spomalením.</li>
+        <li><strong>Distributed DoS (DDoS)</strong> – špeciálny typ DoS útoku, ktorý prebieha z viacerých miest na planéte naraz.</li>
+        <li><strong>Man in the Middle (MITM)</strong> – útok spočíva v odpočúvaní sieťovej prevádzky a následnom zisťovaní jej obsahu za účelom ukradnutia informácií.</li>
+      </ul>
+
+      <h2 id="fyzicka">Bezpečnosť na fyzickej vrstve</h2>
+      <ul>
+        <li>V prípade slabšie zabezpečených sieťových zariadení je možné po pripojení k zásuvke RJ-45 alebo k switchu získať prístup do siete.</li>
+        <li>Cez konzolový port je tiež možné získať prístup k zariadeniu, reštartovať ho a získať z neho konfiguráciu.</li>
+        <li>Na fyzickú ochranu zariadení sa používajú uzamykateľné racky alebo špeciálne zámky do RJ45 konektorov.</li>
+      </ul>
+
+      <h2>Port blocker</h2>
+      <ul>
+        <li>Port blocker je fyzická ochrana sieťových portov.</li>
+        <li>Slúži ako zámok proti odpojeniu alebo proti pripojeniu neoprávneného zariadenia.</li>
+      </ul>
+      <img src="zamky.png" class="schema" alt="zamky">
+      <br>
+
+      <h2>Firewall</h2>
+      <ul>
+        <li>Firewall môže byť špeciálny hardvér (NBF) alebo program (HBF), ktorého úlohou je filtrovať sieťovú prevádzku medzi sieťami alebo počítačmi v sieti.</li>
+        <li>Funguje na základe pravidiel na L3 a L4, pričom v pravidlách sa definuje zdrojová a cieľová IP, zdrojový a cieľový L4 port, prípadne stav spojenia.</li>
+      </ul>
+      <img src="firewall.png" class="firewall" alt="firewall">
+      <h4 style="color: rgb(0, 140, 255);">Existujú 2 typy firewallov:</h4>
+      <ul>
+        <li><strong>Stateless</strong> – každý paket alebo segment je filtrovaný na základe zadaných pravidiel.</li>
+        <li><strong>Stateful</strong> – testovaných je len prvých pár paketov alebo segmentov a ďalšia komunikácia sa riadi podľa toho, ako boli vyhodnotené prvé pakety alebo segmenty v spojení.</li>
+      </ul>
+
+      <br>
+
+      <h2>DMZ</h2>
+      <ul>
+        <li><strong>DMZ</strong> – demilitarizovaná zóna je miesto v sieti (podsieť) obsahujúce zariadenia, ktoré majú byť dostupné z internetu, napríklad web server, mail server, VPN brána alebo VOIP brána.</li>
+        <li>Väčšinou sa umiestňuje medzi 2 firewally.</li>
+        <li>Vonkajší firewall kontroluje prevádzku medzi internetom a DMZ.</li>
+        <li>Vnútorný firewall kontroluje prevádzku medzi DMZ a vnútornou sieťou LAN.</li>
+      </ul>
+      <img src="DMZ.png" class="private" alt="DMZ">
+      <h2>Proxy</h2>
+      <ul>
+        <li>Proxy (angl. splnomocnenec) je špeciálny server v sieti, cez ktorý prechádza všetka sieťová prevádzka.</li>
+        <li>Ak má počítač nastavený proxy server, neodosiela všetku sieťovú prevádzku priamo na cieľovú IP, ale na proxy server.</li>
+        <li>Proxy server kontroluje prevádzku až na L7 a môže filtrovať rôzne dotazy aj na základe kľúčových slov.</li>
+        <li>Zároveň slúži ako cache pre statický webový obsah, napríklad obrázky alebo CSS.</li>
+      </ul>
+      <img src="proxy.png" class="private" alt="proxy">
+      <br>
+
+      <h2 id="vpn">VPN</h2>
+      <ul>
+        <li>VPN funguje veľmi podobne ako proxy server, avšak úlohou VPN je zároveň šifrovať prevádzku.</li>
+        <li>Používateľ VPN má na svojom zariadení nainštalovaný softvér, ktorý sa správa ako VPN klient, pričom tento softvér šifruje všetok dátový tok a odosiela ho na VPN server.</li>
+        <li>VPN server dešifruje dátový tok a posiela ho ďalej do cieľa, ktorý pošle odpoveď späť na VPN server a ten ju doručí šifrovaným prenosom späť cez klienta používateľovi.</li>
+      </ul>
+      <img src="vpn.png" class="private" alt="VPN">
+      <h2>IDS</h2>
+      <h4>Systém na detekciu prienikov</h4>
+      <ul>
+        <li>IDS je zariadenie (NIDS) alebo softvér (HIDS), ktorý umožní analyzovať všetku dátovú prevádzku a detegovať v nej podozrivé vzorce správania.</li>
+        <li>Vyhodnocovanie prebieha na základe signatúr, teda popísaných vzorcov priebehu útoku, alebo na základe narušenia bežnej prevádzky.</li>
+        <li>Po detekcii prieniku upozorní administrátorov, aby proti prieniku včas zasiahli a zabránili škodám.</li>
+      </ul>
+      <img src="ids.png" class="private" alt="ids">
+      <h2>IPS</h2>
+      <h4>Systém na prevenciu prienikov</h4>
+      <ul>
+        <li>IPS je zariadenie (NIPS) alebo softvér (HIPS), ktorý na základe detekcie možného prieniku vykoná sám protiopatrenia, ktoré prieniku zabránia.</li>
+        <li>Tým, že IPS je umiestnený v ceste dát, môže spomaľovať dátový tok, navyše je drahší.</li>
+        <li>Samotná prevencia môže spočívať v ukončení prenosu, odstránení súboru, aktualizácii pravidiel firewallu alebo úprave prístupových práv aplikácie.</li>
+      </ul>
+      <img src="ips.png" class="private" alt="ips">
+      <h2>Honeypot</h2>
+      <ul>
+        <li>Honeypot sám o sebe neslúži ako bezpečnostný prvok, ktorý by detegoval alebo zabraňoval nekalej aktivite na sieti.</li>
+        <li>Jeho úlohou je tváriť sa nevinne a nezabezpečene a nalákať tak útočníkov na to, aby naň realizovali svoje útoky.</li>
+        <li>Na honeypote beží analytický softvér, ktorý sleduje priebehy útokov a z jeho naučených dát je potom možné vytvárať pravidlá pre ďalšie bezpečnostné prvky v sieti, napríklad firewall, proxy, IDS alebo IPS.</li>
+      </ul>
+      <img src="honey.png" class="private" alt="honey">
+      <br>
+      <br>
+      <hr>
+      <hr>
+
+      <div class="Zdroje">
+        <h1 id="Zdroje">Zdroje:</h1>
+
+        <p>
+          <a href="https://mylearning.spseke.sk/course/view.php?id=145" target="_blank" rel="noopener noreferrer">
+            <strong>počítačová bezpečnosť - 3. ročník</strong>
+          </a>
+        </p>
+        <br>
+        <br>
+        <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Ikonky</a>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <hr>
+      <strong><center>&copy; 2026 František Adam</center></strong>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezpečnosť v sieťach – študentská wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="v-header">
+    <div class="v-header-inner">
+      <div class="v-logo">
+<a href="index.html" class="wiki-logo">
+  <img src="zamok.png" alt="Bezpečnosť v sieti" class="wiki-logo-icon">
+  <span class="wiki-logo-text">
+    <span class="wiki-logo-main">Bezpečnosť</span>
+    <span class="wiki-logo-sub">v sieti</span>
+  </span>
+</a>
+      </div>
+
+      <nav class="hor-nav">
+        <a href="vpn.html" style="margin-right: 20px;">VPN<img src="vpnicon.png" style="width: 30px; height: 30px;  margin-left:1px;" alt="vpn">  </a>
+        <a href="opatrenia.html" style="margin-right: 20px;"> ÚTOKY <img src="opatreniabackg.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="highavailability.html" style="margin-right: 20px;"> HIGH-AVAILABILITY <img src="database.png" style="width: 30px; height: 30px;  margin-left: 2px;" alt="vpn"> </a>
+        <a href="bezpecnostvowifi.html">WiFi <img src="wi-fi.png" style="width: 30px; height: 30px;  margin-left: 1px;" alt="vpn"> </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="v-layout">
+    <aside class="v-sidebar">
+      <div class="v-sidebar-box">
+        <div class="v-sidebar-title">Obsah</div>
+        <ul>
+          <li><a href="#sifspojenie">Šifrované spojenie medzi klientom a serverom</a></li>
+          <li><a href="#otazky">Otázky na premýšľanie</a></li>
+          <li><a href="#prenosdat">Zabezpečený prenos dát</a></li>
+          <li><a href="#tls">TLS protokol</a></li>
+          <li><a href="#cipher">Cipher Suite</a></li>
+          <li><a href="#symetricke">Symetrické vs. asymetrické šifrovanie</a></li>
+          <li><a href="#certifikaty">Certifikačné autority a certifikáty</a></li>
+          <li><a href="#ca">Dôveryhodnosť CA</a></li>
+          <li><a href="#integrita">Overenie integrity</a></li>
+          <li><a href="#handshake">TLS handshake</a></li>
+          <li><a href="#https-server">Ako sa implementuje HTTPS</a></li>
+          <li><a href="#Zdroje">Zdroje</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="v-content">
+
+      <h1 id="sifspojenie">Šifrované spojenie medzi klientom a serverom</h1>
+      <p class="v-lead">
+        Internet stále využíva množstvo protokolov, ktoré boli vytvorené pred desiatkami rokov,
+        a preto veľa z nich funguje na plain-text prenose. Dnes je však potrebné mať zabezpečený
+        prenos dát, aby nepovolané osoby nevideli, čo sa prenáša medzi klientom a serverom.
+      </p>
+      <p>
+        Komunikáciu je preto potrebné šifrovať.
+      </p>
+
+    <h2 id="otazky" class="cervene">Otázky na premýšľanie</h2>
+  <ul class="cervene">
+    <strong>
+    <li>Ako funguje protokol HTTP?</li>
+    <li>Aké množstvá dát používateľ prenáša cez protokol HTTP?</li>
+    <li>Akú kryptografiu použiť, ak chcem zašifrovať HTTP prenos – symetrickú alebo asymetrickú?</li>
+    <li>Ako sa vyhnúť tomu, aby sme museli významne meniť správanie protokolu HTTP, ale mohli ho zároveň šifrovať?</li>
+    </strong>
+  </ul>
+
+      <h2 id="prenosdat">Zabezpečený prenos dát</h2>
+      <ul>
+        <li>Mnoho starších internetových protokolov funguje na plain-text prenose, teda prenose čitateľného textu.</li>
+        <li>Ak sa komunikácia nešifruje, môže ju zachytiť a prečítať nepovolaná osoba.</li>
+        <li>Riešením je šifrovanie komunikácie medzi serverom a klientom.</li>
+      </ul>
+
+      <h2 id="tls">Ako tieto protokoly komunikujú šifrovane?</h2>
+      <ul>
+        <li>Riešením nie je prerábať každý aplikačný protokol zvlášť.</li>
+        <li>Namiesto toho sa použije „podkladový“ protokol, ktorý komunikáciu zašifruje.</li>
+        <li>Týmto protokolom je <strong>TLS (Transport Layer Security)</strong>, ktorý funguje na relačnej vrstve ISO OSI modelu.</li>
+      </ul>
+
+      <p>Úlohy TLS:</p>
+      <ul>
+        <li><strong>Zabezpečenie dôvernosti</strong> – dohodnúť metódu šifrovania a šifrovací kľúč.</li>
+        <li><strong>Zabezpečenie integrity</strong> – dohodnúť metódu overovania prijatia úplných a po ceste nezmenených informácií.</li>
+        <li><strong>Zabezpečenie autenticity</strong> – overiť, že server je naozaj tým, za koho sa vydáva.</li>
+      </ul>
+
+      <h2 id="cipher">Cipher Suite – šifrovacia sada</h2>
+      <p>
+        Cipher Suite určuje, akým spôsobom sa bude riešiť výmena kľúčov, autentifikácia, samotné šifrovanie prenosu
+        a overenie integrity komunikácie.
+      </p>
+      <img src="cipher-suite.png" class="schema1" alt="Cipher Suite">
+
+      <h4>Cipher Suite pre TLS 1.0 – 1.2</h4>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Časť</th>
+            <th>Príklady algoritmov</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Key exchange</td>
+            <td>RSA, Diffie-Hellman, Diffie-Hellman Eph., ECDHE, SRP, PSK</td>
+          </tr>
+          <tr>
+            <td>Authentication</td>
+            <td>RSA, DSA, ECDSA</td>
+          </tr>
+          <tr>
+            <td>Transport Cipher</td>
+            <td>RC4, 3DES, AES, IDEA, DES, Camellia, ChaCha20</td>
+          </tr>
+          <tr>
+            <td>Integrity</td>
+            <td>MD5, SHA</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="symetricke">Symetrické alebo asymetrické šifrovanie?</h2>
+      <ul>
+        <li>Symetrické šifry sú rýchle a spoľahlivé, ale majú nevýhodu v tom, že obe strany musia poznať rovnaký šifrovací kľúč.</li>
+        <li>Asymetrické šifry tento problém riešia, ale sú výpočtovo náročnejšie a potrebujú viac CPU výkonu.</li>
+        <li><strong>Riešením je použiť asymetrické šifrovanie len na bezpečné odovzdanie symetrického kľúča a ďalšiu komunikáciu šifrovať symetricky.</strong></li>
+      </ul>
+
+      <h2 id="certifikaty">Čím šifrujem pri asymetrickej kryptografii?</h2>
+      <ul>
+        <li>Ak chcem niečo zašifrovať pri asymetrickej kryptografii, musím použiť verejný kľúč adresáta.</li>
+        <li>Problém je v tom, ako môžem dôverovať serveru, že je naozaj tým, za koho sa vydáva.</li>
+        <li>Riešením je elektronicky podpísať verejný kľúč servera podpisom dôveryhodnej certifikačnej autority.</li>
+      </ul>
+
+      <h2>Prosím? Podpísať? Ako?</h2>
+      <ul>
+        <li>Server si najprv vygeneruje kľúčový pár – verejný a súkromný kľúč.</li>
+        <li>Aby mu klienti mohli dôverovať, musí verejný kľúč odoslať na overenie a podpísanie certifikačnej autorite.</li>
+        <li>Certifikačná autorita overí údaje o vlastníkovi verejného kľúča a vydá certifikát verejného kľúča servera, teda SSL certifikát.</li>
+        <li>V certifikáte sú uvedené údaje vlastníka, verejný kľúč, hash kľúča, platnosť certifikátu a ďalšie informácie.</li>
+      </ul>
+
+      <h2>Self-signed vs. Let’s Encrypt vs. komerčný</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Typ certifikátu</th>
+            <th>Charakteristika</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Self-signed</td>
+            <td>Žiadne overenie, certifikát si držiteľ podpisuje sám, je zadarmo, ale prehliadače ukazujú varovanie.</td>
+          </tr>
+          <tr>
+            <td>Let’s Encrypt</td>
+            <td>Overuje len doménu, certifikát je podpísaný dôveryhodnou CA, je zadarmo a má platnosť 3 mesiace s automatickým obnovením.</td>
+          </tr>
+          <tr>
+            <td>Komerčný</td>
+            <td>Overuje doménu aj organizáciu, je platený, podporovaný v prehliadačoch a platnosť býva 1 alebo 2 roky.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="ca">Ako môžem veriť, že CA je dôveryhodná?</h2>
+      <ul>
+        <li>Certifikačné autority sú spoločnosti, do ktorých ľudia vkladajú dôveru a za certifikát im platia.</li>
+        <li>Aj certifikačné autority majú svoj certifikát podpísaný dôveryhodnou koreňovou certifikačnou autoritou.</li>
+        <li>Dôveryhodné koreňové CA sú firmy, ktorým veria výrobcovia operačných systémov a internetových prehliadačov.</li>
+        <li>Ich certifikáty sú priamo implementované v softvéri, napríklad v prehliadači alebo operačnom systéme.</li>
+      </ul>
+
+      <h2>Chain of trust – reťazec dôvery</h2>
+      <ul>
+        <li>Reťazec dôvery znamená, že certifikát servera je podpísaný vyššou autoritou.</li>
+        <li>Táto autorita je podpísaná ďalšou dôveryhodnou autoritou, až sa dostaneme ku koreňovej CA.</li>
+        <li>Ak prehliadač dôveruje koreňovej autorite, vie dôverovať aj certifikátu servera v tomto reťazci.</li>
+      </ul>
+      <img src="trust.png" alt="Reťazec dôvery">
+
+      <h2>Čo ak prehliadač nedôveruje certifikátu?</h2>
+      <ul>
+        <li>Prehliadač používateľa zobrazí bezpečnostné varovanie.</li>
+        <li>Môže ísť napríklad o self-signed certifikát, neplatný certifikát alebo certifikát pre inú doménu.</li>
+        <li>V takom prípade spojenie nie je považované za dôveryhodné.</li>
+      </ul>
+
+      <h2 id="integrita">Overenie integrity</h2>
+      <ul>
+        <li>Integrita, teda neporušenosť správy, sa overuje pomocou tagu alebo <strong>HMAC</strong> (Hash Message Authentication Code).</li>
+        <li>Do hash funkcie na strane odosielateľa vstupuje správa spolu s kľúčom na šifrovanie.</li>
+        <li>Vypočítaný HMAC sa pripojí na koniec správy.</li>
+        <li>Na strane prijímateľa sa overí, či sa vypočítaný HMAC zhoduje s prijatým.</li>
+        <li>Ak sa nezhoduje, so správou sa po ceste manipulovalo alebo sa poškodila.</li>
+      </ul>
+      <img src="HASH.png" class="schema" alt="HASH">
+      <h2 id="handshake">Transport Layer Security (TLS) protokol</h2>
+      <ul>
+        <li>TLS je protokol relačnej vrstvy a je nezávislý od konkrétneho protokolu aplikačnej vrstvy.</li>
+        <li>TLS klient a server dohodnú spojenie pomocou procedúry nazývanej <strong>handshake</strong>.</li>
+        <li>Počas handshake si vymenia informácie o dôvernosti, integrite a autentickosti spojenia.</li>
+      </ul>
+
+      <h4>TLS handshake – základný priebeh</h4>
+      <ol>
+        <li>Klient sa pripojí na server s povoleným TLS spojením, pri webe typicky cez HTTPS na porte 443.</li>
+        <li>Klient pošle zoznam podporovaných šifier a hash funkcií.</li>
+        <li>Server vyberie najsilnejšiu podporovanú šifru a hash funkciu a oznámi to klientovi.</li>
+        <li>Server pošle klientovi digitálny certifikát s menom servera, dôveryhodnou CA a verejným kľúčom servera.</li>
+        <li>Klient si ešte pred pokračovaním overí platnosť certifikátu.</li>
+        <li>Klient zašifruje náhodné číslo verejným kľúčom servera a pošle ho serveru.</li>
+        <li>Server toto číslo dešifruje svojím súkromným kľúčom.</li>
+        <li>Z náhodného čísla obe strany vygenerujú kryptografické kľúče na šifrovanie a dešifrovanie ďalšej komunikácie.</li>
+      </ol>
+
+      <h2 id="https-server">Ako sa implementuje HTTPS na server?</h2>
+      <ol>
+        <li>Vygenerovať kľúčový pár, teda verejný a súkromný kľúč, a pripraviť požiadavku na certifikáciu (CSR).</li>
+        <li>Odoslať CSR certifikačnej autorite a požiadať o HTTPS certifikát.</li>
+        <li>Prevziať podpísaný HTTPS certifikát a nakopírovať ho na webserver.</li>
+        <li>Nainštalovať podporu HTTPS na webserveri, napríklad mod_ssl.</li>
+        <li>Zapnúť HTTPS na serveri – povoliť port 443, otvoriť ho vo firewalle a nastaviť cesty k privátnemu kľúču a certifikátu.</li>
+        <li>Nastaviť presmerovanie z portu 80 na port 443.</li>
+      </ol>
+
+      <br>
+      <br>
+      <hr>
+      <hr>
+
+      <div class="Zdroje">
+        <h1 id="Zdroje">Zdroje:</h1>
+
+        <p>
+          <a href="https://mylearning.spseke.sk/course/view.php?id=145" target="_blank" rel="noopener noreferrer">
+            <strong>počítačová bezpečnosť - 3. ročník</strong>
+          </a>
+        </p>
+        <br>
+        <p>Šifrované spojenie medzi klientom a serverom – školská prezentácia.</p>
+        <br>
+        <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Ikonky</a>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <hr>
+      <strong><center>&copy; 2026 František Adam</center></strong>
+    </main>
+  </div>
+</body>
+</html>

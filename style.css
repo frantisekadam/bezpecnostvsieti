@@ -1,0 +1,251 @@
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", sans-serif;
+  background: #f6f6f6;
+  color: #202122;
+}
+.firewall{
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 40px 350px;
+}
+.wpa2{
+  width: 600px;
+  height: auto;
+  border: solid gray 1px;
+  margin: 40px 150px;
+}
+.private {
+  width: 400px;
+  height: auto;
+  border: 1px solid gray;
+  display: block;
+  margin: 40px auto;
+}
+.cervene{
+  color: red;
+}
+.schema1{
+   height: auto;
+  border: 1px solid gray;
+}
+
+.schema{
+  border: 1px solid black;
+}
+.zalohovanie {
+  height: 100px;
+  width: 350px;
+  border: 1px solid gray;
+
+.farbaz {
+  color: red;
+}
+
+.private {
+  width: 800px;
+  height: auto;
+  border: 1px solid gray;
+  display: block;
+  margin: 12px auto;
+}
+
+}
+/* Horný pás ako Vector */
+.v-header {
+  border-bottom: 1px solid #a2a9b1;
+  background: #f8f9fa;
+}
+
+.v-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2px 2px;
+  display: flex;
+  align-items: center;
+}
+
+/* Logo – väčšie, tučné, vycentrované vo svojom boxe */
+.v-logo {
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;            /* text + obrázok vedľa seba */
+  align-items: center;      /* zvislé zarovnanie */
+  justify-content: center;  /* zarovnanie na stred vo v-logo */
+}
+
+.wiki-logo {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  text-decoration: none;
+  color: black;
+}
+
+.wiki-logo-icon {
+    width: 80px;
+  height: 80px;
+  display: block;
+}
+
+.wiki-logo-text {
+  display: flex;
+  flex-direction:column;
+  line-height: 1.05;
+}
+
+.wiki-logo-main {
+  font-size: 32px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight:450;
+  color: black;
+}
+
+.wiki-logo-sub {
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  color: #54595d;
+  letter-spacing: 3px;
+  display: block;
+  text-align:center ;
+}
+/* menu doprava */
+.hor-nav  {
+  margin-left: auto;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+}
+
+.hor-nav a:hover{
+  border-radius: 10%;
+  background-color:lightblue ;
+  opacity: 100%;
+  color: black;
+  transition-duration: 0.5s;
+}
+
+.v-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+}
+
+/* Sidebar */
+.v-sidebar {
+  background: #f8f9fa;
+  border-right: 1px solid #a2a9b1;
+  padding: 16px;
+  font-size: 0.9rem;
+}
+
+.v-sidebar-box {
+  border: 1px solid #a2a9b1;
+  background: #ffffff;
+  padding: 8px 10px;
+}
+
+.v-sidebar-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.v-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 4px 0 0;
+}
+
+.v-sidebar li {
+  margin: 3px 0;
+}
+
+.v-sidebar a {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+.v-sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Obsah */
+.v-content {
+  background: #ffffff;
+  padding: 24px 32px 48px;
+}
+
+.v-content h1 {
+  font-size: 1.8rem;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.v-lead {
+  font-size: 0.95rem;
+  color: #54595d;
+  margin-bottom: 16px;
+}
+
+.v-content h2 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid #eaecf0;
+  margin-top: 24px;
+  padding-bottom: 2px;
+}
+
+.v-content p {
+  margin: 8px 0;
+  line-height: 1.7;
+}
+
+.v-content ul {
+  margin: 6px 0 10px;
+  padding-left: 20px;
+}
+
+.v-content li {
+  margin: 3px 0;
+}
+
+/* Tabuľka – jednoduchý štýl */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.compare-table th,
+.compare-table td {
+  border: 1px solid #a2a9b1;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.compare-table thead {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.upsko {
+  float: middle;
+  width: 300px;
+  height: 200px;
+  margin-left: 150px;
+  border: 1px solid gray;
+}
+
+
+.Zdroje {
+   margin-top: 100px;   /* zväčši alebo zmenši podľa oka */
+
+}

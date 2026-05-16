@@ -1,0 +1,81 @@
+body{
+  background-color: rgb(242, 242, 242);
+}
+
+.v-header {
+  border-bottom: 1px solid #ccc;
+  padding: 50px 30px;
+  background-color: rgb(255, 255, 255);
+}
+
+.v-header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiki-logo {
+  display: flex;
+  align-items: center;
+  margin-right: 65px;
+  text-decoration: none;
+  color: black;
+}
+
+.wiki-logo-icon {
+  width: 200px;
+  height: 200px;
+  margin-right: -20px;
+}
+
+.wiki-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wiki-logo-main {
+  letter-spacing: 1px;
+  font-size: 60px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: normal;
+  color: black;
+}
+
+.wiki-logo-sub {
+  letter-spacing: 3px;
+  font-size: 25px;
+  font-family: Arial, sans-serif;
+  color: #54595d;
+}
+
+.hor-nav {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.hor-nav a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+}
+
+.hor-nav a:hover{
+  border-radius: 10%;
+  background-color:lightblue ;
+  opacity: 100%;
+  color: black;
+  transition-duration: 0.5s;
+}
+.hor-nav img {
+  width: 30px;
+  height: 30px;
+}

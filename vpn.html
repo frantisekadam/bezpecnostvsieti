@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezpečnosť v sieťach – študentská wiki</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="zamok.png">
+</head>
+<body>
+  <header class="v-header">
+    <div class="v-header-inner">
+      <div class="v-logo">
+<a href="index.html" class="wiki-logo">
+  <img src="zamok.png" alt="Bezpečnosť v sieti" class="wiki-logo-icon">
+  <span class="wiki-logo-text">
+    <span class="wiki-logo-main">Bezpečnosť</span>
+    <span class="wiki-logo-sub">v sieti</span>
+  </span>
+</a>
+      </div>
+
+      <nav class="hor-nav">
+        <a href="vpn.html" style="margin-right: 20px;">VPN<img src="vpnicon.png" style="width: 30px; height: 30px;  margin-left:1px;" alt="vpn">  </a>
+        <a href="opatrenia.html" style="margin-right: 20px;"> ÚTOKY <img src="opatreniabackg.png" style="width: 30px; height: 30px; margin-left: 1px;" alt="utoky"> </a>
+        <a href="highavailability.html" style="margin-right: 20px;"> HIGH-AVAILABILITY <img src="database.png" style="width: 30px; height: 30px;  margin-left: 2px;" alt="vpn"> </a>
+        <a href="bezpecnostvowifi.html">WiFi <img src="wi-fi.png" style="width: 30px; height: 30px;  margin-left: 1px;" alt="vpn"> </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="v-layout">
+    <aside class="v-sidebar">
+      <div class="v-sidebar-box">
+        <div class="v-sidebar-title">Obsah</div>
+        <ul>
+          <li><a href="#vpn">Virtuálne privátne siete (VPN)</a></li>
+          <li><a href="#historia">Krátka história</a></li>
+          <li><a href="#wan-private">Možnosti pripojenia do WAN (privátne)</a></li>
+          <li><a href="#wan-public">Možnosti pripojenia do WAN (verejné)</a></li>
+          <li><a href="#fungovanie-vpn">Ako funguje VPN?</a></li>
+          <li><a href="#site-to-site">Site-to-site VPN</a></li>
+          <li><a href="#remote-access">Remote-access VPN</a></li>
+          <li><a href="#smartfon-vpn">Akú VPN používam v smartfóne alebo počítači?</a></li>
+          <li><a href="#vyhody-vpn">Čo umožňuje VPN?</a></li>
+          <li><a href="#tunel">Sieťový tunel</a></li>
+          <li><a href="#gre">Príklad vytvorenia sieťového tunela – GRE</a></li>
+          <li><a href="#vpn-spojenie">Ako prebieha vytvorenie VPN spojenia?</a></li>
+          <li><a href="#vpn-protokoly">VPN protokoly</a></li>
+          <li><a href="#pptp">PPTP</a></li>
+          <li><a href="#l2tp">L2TP + IPSec</a></li>
+          <li><a href="#ipsec">Šifrovanie – IPSec</a></li>
+          <li><a href="#sstp">SSTP</a></li>
+          <li><a href="#openvpn">OpenVPN</a></li>
+          <li><a href="#ikev2">IKEv2 + IPSec</a></li>
+          <li><a href="#wireguard">WireGuard</a></li>
+          <li><a href="#Zdroje">Zdroje</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="v-content">
+      <h1 id="vpn">Virtuálne privátne siete (VPN)</h1>
+
+      <h2 id="historia">Krátka história</h2>
+      <ul>
+        <li>Firmy často riešia potrebu prepojiť svoje lokality, napríklad pobočky s centrálou, prostredníctvom počítačovej siete.</li>
+        <li>Mohli si vybrať z viacerých možností podľa toho, akú úroveň bezpečnosti chceli dosiahnuť a koľko financií boli ochotné zaplatiť.</li>
+        <li>S masívnym rozvojom internetu začalo čoraz viac firiem využívať technológiu virtuálnych privátnych sietí (VPN).</li>
+      </ul>
+
+      <h2 id="wan-private">Možnosti pripojenia do WAN (privátne)</h2>
+
+      <h4>Dedikované privátne linky</h4>
+      <ul>
+        <li>Zákazník si prenajme alebo zakúpi vlastný komunikačný okruh, napríklad optické vlákno, od telekomunikačnej spoločnosti.</li>
+        <li>Dáta zákazníka nevidí nikto iný, pretože idú len po jeho vlastnej sieti.</li>
+        <li>Veľmi bezpečné, ale veľmi drahé riešenie.</li>
+      </ul>
+
+      <h4>Prepínané privátne linky</h4>
+      <ul>
+        <li>Zákazník si zaplatí za vstup do siete telekomunikačného operátora, pričom prenos dát sa prenáša cez trvalo alebo dočasne vytvorené okruhy.</li>
+        <li>Dáta zákazníka sú len v sieti jedného operátora a operátor zabezpečuje, aby si rôzni zákazníci navzájom nevideli do svojich dát.</li>
+        <li>Bezpečné za stredne vysokú cenu.</li>
+      </ul>
+      <img src="private.png" class="private" alt="Privátne linky">
+
+      <h4 id="wan-public">Možnosti pripojenia do WAN - verejné</h4>
+      <ul>
+        <li>Dáta zákazníka putujú cez verejnú sieť Internet, kde si ich odovzdávajú rôzne telekomunikačné spoločnosti (ISP).</li>
+        <li>ISP negarantuje bezpečnosť prenášaných dát mimo svojej siete, preto si zákazník musí zabezpečiť dáta vo vlastnej réžii.</li>
+        <li>Táto možnosť je najlacnejšia, najmenej bezpečná a vyžaduje si najväčšiu mieru konfigurácie na strane zákazníka.</li>
+      </ul>
+      <img src="public.png" class="private" alt="Verejné WAN pripojenie">
+
+      <h2 id="fungovanie-vpn">Ako funguje VPN?</h2>
+      <ul>
+        <li>VPN vznikla ako spôsob, ako dosiahnuť bezpečnosť privátnych sietí za cenu pripojenia do verejnej siete.</li>
+        <li>Cieľom je vytvoriť zdanie privátnej siete, ale pritom prenášať dáta cez verejný internet.</li>
+      </ul>
+
+      <h4 style="color: rgb(0, 140, 255);">Poznáme 2 základné typy VPN:</h4>
+      <ul>
+        <li><strong>Site-to-site</strong> → prepojenie dvoch lokalít</li>
+        <li><strong>Remote access</strong> → pripojenie koncového používateľa do vzdialenej siete</li>
+      </ul>
+
+      <h2 id="site-to-site">Site-to-site VPN</h2>
+      <ul>
+        <li>Je to typ VPN, ktorý prepája dve lokality tak, že sa vytvorí šifrované spojenie medzi routrami, ktorými sa tieto lokality pripájajú do internetu.</li>
+        <li><strong>Celá konfigurácia je implementovaná na routroch.</strong></li>
+      </ul>
+      <img src="site2site.png" class="private" alt="Site-to-site VPN">
+
+      <h2 id="remote-access">Remote-access VPN</h2>
+      <ul>
+        <li>Je to typ VPN, ktorý prepája koncového používateľa s inou sieťou, napríklad v práci alebo škole.</li>
+        <li>Pracovník na home-office môže pomocou takejto VPN pracovať vo firemnej sieti rovnako, ako keby sedel za svojím stolom v práci.</li>
+        <li><strong>Časť konfigurácie je implementovaná na routri a časť na zariadení klienta (PC, smartfón), ktorý potrebuje na pripojenie špeciálny softvér.</strong></li>
+      </ul>
+      <img src="remoteaccess.png" class="private" alt="Remote-access VPN">
+
+      <h2 id="smartfon-vpn">Akú VPN používam v smartfóne alebo počítači?</h2>
+      <ul>
+        <li>Smartfón alebo počítač je koncové zariadenie, preto používa typ <strong>Remote-access VPN</strong>.</li>
+        <li>Pomocou špeciálneho softvéru sa pripojí do siete poskytovateľa VPN služby a ďalšia komunikácia ide cez VPN providera na server služby, ktorú chceme využívať.</li>
+        <li>Do bežnej komunikácie sa teda vloží ešte jeden prvok – VPN provider.</li>
+      </ul>
+      <img src="fungovanie.png" class="private" alt="Ako funguje VPN na zariadení používateľa">
+
+      <h2 id="vyhody-vpn">Čo umožňuje VPN?</h2>
+      <ul>
+        <li>Zachovanie anonymity – koncová služba nepozná moju skutočnú IP adresu ani poskytovateľa internetu.</li>
+        <li>Zachovanie súkromia – komunikácia je na zariadení zašifrovaná, takže ju nevie prečítať ISP, vláda ani prípadný útočník.</li>
+        <li>Ochranu proti malvéru – VPN klient môže používať DNS server od VPN providera namiesto DNS servera nastaveného v operačnom systéme.</li>
+      </ul>
+
+      <h2>Môžem prenášať webstránky alebo hrať hry cez VPN?</h2>
+      <ul>
+        <li>Mnoho programov potrebuje klasickú sieťovú infraštruktúru, aby mohli fungovať.</li>
+        <li>To zahŕňa schopnosť práce s IP paketmi, TCP/UDP segmentmi a podobne.</li>
+        <li>Aby tieto programy mohli fungovať aj vo VPN, stačí na úrovni operačného systému zabezpečiť vytvorenie sieťového tunela.</li>
+      </ul>
+
+      <h2 id="tunel">Sieťový tunel</h2>
+      <ul>
+        <li>Sieťový tunel je spôsob, pri ktorom sa pôvodné dáta zapuzdria do ďalšieho paketu a prenesú cez inú sieť.</li>
+        <li>Vďaka tomu môže komunikácia vyzerať, akoby išla cez privátnu sieť, aj keď v skutočnosti ide cez internet.</li>
+      </ul>
+      <img src="tunel.png" class="schema" alt="Sieťový tunel">
+
+      <h2 id="gre">Príklad vytvorenia sieťového tunela – GRE</h2>
+      <ul>
+        <li><strong>GRE (Generic Routing Encapsulation)</strong> je protokol, ktorý môže fungovať na L3 alebo na L2.</li>
+        <li>Na L3 zapuzdruje IP paket do iného IP paketu, na L2 zapuzdruje rámec do iného rámca.</li>
+        <li>GRE sám o sebe nešifruje, iba enkapsuluje dáta, preto cez neho nevzniká privátna, ale len virtuálna sieť.</li>
+      </ul>
+
+      <h2 id="vpn-spojenie">Ako prebieha vytvorenie VPN spojenia?</h2>
+      <ol>
+        <li>Používateľ iniciuje spustenie pripojenia na VPN server cez funkciu operačného systému alebo špeciálny program.</li>
+        <li>Používateľ sa autentifikuje voči VPN serveru menom a heslom alebo asymetrickou kryptografiou.</li>
+        <li>Server overí používateľa a pošle mu sieťové nastavenia, napríklad DNS, gateway a smerovacie tabuľky.</li>
+        <li>Server si s klientom dohodne šifrovacie parametre a vytvorí sa sieťový tunel, cez ktorý prebieha komunikácia šifrovane.</li>
+      </ol>
+
+      <h2 id="vpn-protokoly">VPN protokoly</h2>
+      <h4>Na pripojenie do VPN sa používajú rôzne VPN protokoly ako:</h4>
+      <ul>
+        <li>PPTP</li>
+        <li>L2TP + IPSec</li>
+        <li>SSTP</li>
+        <li>OpenVPN</li>
+        <li>IKEv2 + IPSec</li>
+        <li>WireGuard</li>
+      </ul>
+
+      <h2 id="pptp">PPTP</h2>
+      <ul>
+        <li>Najstarší tunelovací protokol, ktorý sa objavil už vo Windows 95.</li>
+        <li>Overuje používateľov cez meno a heslo.</li>
+        <li>Používa 128-bitové RC4 šifrovanie, ktoré už bolo prelomené.</li>
+        <li><strong>Výhody:</strong> veľmi rýchly, ľahko sa nastavuje, má širokú podporu v systémoch.</li>
+        <li><strong>Nevýhody:</strong> slabé šifrovanie, ľahko sa blokuje a zle pracuje na nestabilných sieťach.</li>
+      </ul>
+
+      <h2 id="l2tp">L2TP + IPSec</h2>
+      <ul>
+        <li>L2TP je protokol, ktorý vylepšuje PPTP.</li>
+        <li>Overuje používateľov cez meno a heslo alebo cez certifikát.</li>
+        <li>Sám o sebe nešifruje, preto sa kombinuje s IPSec.</li>
+        <li><strong>Výhody:</strong> bezpečnejší ako PPTP, ľahko sa nastavuje, má dobrý výkon aj na nestabilných sieťach.</li>
+        <li><strong>Nevýhody:</strong> pomalší ako PPTP a dá sa ľahšie blokovať.</li>
+      </ul>
+
+      <h2 id="ipsec">Šifrovanie – IPSec</h2>
+      <ul>
+        <li>IPSec sa používa na zabezpečenie šifrovaného spojenia na L3 vrstve.</li>
+        <li>Šifruje celý pôvodný IP paket, overuje integritu dát a autenticitu komunikujúcich strán.</li>
+      </ul>
+
+      <h4>Hlavné komponenty IPSec:</h4>
+      <ul>
+        <li><strong>IPSec IKE</strong> – komponent pre výmenu šifrovacích kľúčov.</li>
+        <li><strong>IPSec AH</strong> – zabezpečuje potvrdenie autenticity a overenie integrity, ale nešifruje dáta.</li>
+        <li><strong>IPSec ESP</strong> – zabezpečuje autenticitu, integritu aj samotné šifrovanie dát.</li>
+      </ul>
+
+      <h2 id="sstp">SSTP</h2>
+      <ul>
+        <li>Protokol vyvinutý Microsoftom ako lepšia náhrada PPTP.</li>
+        <li>Overuje používateľov cez meno a heslo alebo cez certifikát.</li>
+        <li>Na šifrovanie využíva SSL s 256-bitovým kľúčom.</li>
+        <li><strong>Výhody:</strong> dobré šifrovanie, dobrá podpora v Microsoft produktoch, dobre prechádza cez firewally.</li>
+        <li><strong>Nevýhody:</strong> proprietárny produkt Microsoftu a otázne súkromie.</li>
+      </ul>
+
+      <h2 id="openvpn">OpenVPN</h2>
+      <ul>
+        <li>Open-source VPN protokol, ktorý je dnes štandardom v priemysle.</li>
+        <li>Overuje používateľov cez meno a heslo alebo cez certifikát.</li>
+        <li>Využíva rôzne šifrovacie a overovacie algoritmy podľa konfigurácie servera.</li>
+        <li><strong>Výhody:</strong> výborné šifrovanie, široká kompatibilita, dobre prechádza cez firewally, je rýchly.</li>
+        <li><strong>Nevýhody:</strong> zložitejšia konfigurácia a potreba klienta na koncovom zariadení.</li>
+      </ul>
+
+      <h2 id="ikev2">IKEv2 + IPSec</h2>
+      <ul>
+        <li>IKEv2 je tunelovací protokol, ktorý sa spája s IPSec.</li>
+        <li>Overuje používateľov cez meno a heslo alebo cez certifikát.</li>
+        <li><strong>Výhody:</strong> výborné šifrovanie, podpora MOBIKE, vysoká rýchlosť a stabilita pri zmene siete.</li>
+        <li><strong>Nevýhody:</strong> slabšia podpora na niektorých zariadeniach a závislosť od určitých portov.</li>
+      </ul>
+
+      <h2 id="wireguard">WireGuard</h2>
+      <ul>
+        <li>Najnovší prírastok do rodiny VPN protokolov.</li>
+        <li>Je navrhnutý s dôrazom na jednoduchosť a ľahké používanie.</li>
+        <li>Ponúka sadu moderných kryptografických algoritmov s dobrou bezpečnosťou.</li>
+        <li><strong>Výhody:</strong> vysoká rýchlosť, robustné šifrovanie, podpora prepínania medzi sieťami počas spojenia.</li>
+        <li><strong>Nevýhody:</strong> stále sa vyvíja a zatiaľ neprešiel takým množstvom auditov ako staršie riešenia.</li>
+      </ul>
+
+      <div class="Zdroje">
+        <h1 id="Zdroje">Zdroje:</h1>
+
+        <p>
+          <a href="https://mylearning.spseke.sk/course/view.php?id=145" target="_blank" rel="noopener noreferrer">
+            <strong>Počítačová bezpečnosť - 3. ročník</strong>
+          </a>
+        </p>
+        <br>
+        <br>
+        <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Ikonky</a>
+        <br>
+        <br>
+      </div>
+
+      <br>
+      <br>
+      <hr>
+      <strong><center>&copy; 2026 František Adam</center></strong>
+    </main>
+  </div>
+</body>
+</html>
