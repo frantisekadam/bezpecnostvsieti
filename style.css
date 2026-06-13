@@ -17,6 +17,13 @@ body {
   border: solid gray 1px;
   margin: 40px 150px;
 }
+.tunel {
+  width: 600px;
+  height: auto;
+  border: 1px solid gray;
+  display: block;
+  margin: 40px auto;
+}
 .private {
   width: 400px;
   height: auto;
